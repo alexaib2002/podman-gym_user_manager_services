@@ -2,12 +2,15 @@ services:
     db:
         image: "docker.io/postgres:latest"
         container_name: db
+        ports:
+            - "25432:5432"
         environment:
             POSTGRES_DB: "gym_db"
             POSTGRES_USER: "postgres"
             POSTGRES_PASSWORD: "admin123"
         volumes:
             - "./db:/var/lib/postgresql/data:rw"
+            - "./sql:/docker-entrypoint-initdb.d"
     admin:
         depends_on: "db"
         image: "docker.io/dpage/pgadmin4:latest"
